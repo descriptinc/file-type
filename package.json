@@ -1,6 +1,6 @@
 {
 	"name": "@descript/file-type",
-	"version": "18.2.1-patch.2",
+	"version": "18.2.1-patch.3",
 	"description": "Detect the file type of a Buffer/Uint8Array/ArrayBuffer",
 	"license": "MIT",
 	"repository": "sindresorhus/file-type",
@@ -18,12 +18,12 @@
 			"default": "./dist/browser.js"
 		},
 		"./browser": {
-			"default": "./dist/browser.js",
-			"types": "./browser.d.ts"
+			"types": "./browser.d.ts",
+			"default": "./dist/browser.js"
 		},
 		"./core":{
-			"default":"./dist/core.js", 
-			"types":"./core.d.ts"
+			"types":"./core.d.ts",
+			"default":"./dist/core.js"
 		}
 	},
 	"engines": {
