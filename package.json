@@ -1,6 +1,6 @@
 {
-	"name": "file-type",
-	"version": "18.2.1",
+	"name": "@descript/file-type",
+	"version": "18.2.1-patch.3",
 	"description": "Detect the file type of a Buffer/Uint8Array/ArrayBuffer",
 	"license": "MIT",
 	"repository": "sindresorhus/file-type",
@@ -10,29 +10,36 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
-	"type": "module",
+	"type": "commonjs",
 	"exports": {
 		".": {
-			"node": "./index.js",
-			"default": "./browser.js"
+			"types": "./index.d.ts",
+			"node": "./dist/index.js",
+			"default": "./dist/browser.js"
 		},
-		"./core": "./core.js"
+		"./browser": {
+			"types": "./browser.d.ts",
+			"default": "./dist/browser.js"
+		},
+		"./core":{
+			"types":"./core.d.ts",
+			"default":"./dist/core.js"
+		}
 	},
 	"engines": {
 		"node": ">=14.16"
 	},
 	"scripts": {
+		"build": "npm run build:core && npm run build:index && npm run build:browser",
+		"build:browser": "npx esbuild --bundle browser.js --outfile=dist/browser.js  --external:node:buffer --external:node:stream --external:buffer",
+		"build:core": "npx esbuild --bundle core.js --platform=node --outfile=dist/core.js",
+		"build:index": "npx esbuild --bundle index.js --platform=node --outfile=dist/index.js",
+		"prepublishOnly": "npm run build",
 		"test": "xo && ava && tsd"
 	},
 	"files": [
-		"index.js",
-		"index.d.ts",
-		"browser.js",
-		"browser.d.ts",
-		"core.js",
-		"core.d.ts",
-		"supported.js",
-		"util.js"
+		"*.d.ts",
+		"dist/*"
 	],
 	"keywords": [
 		"mime",
@@ -212,6 +219,7 @@
 		"@types/node": "^18.16.0",
 		"ava": "^5.2.0",
 		"commonmark": "^0.30.0",
+		"esbuild": "^0.17.18",
 		"noop-stream": "^1.0.0",
 		"tsd": "^0.28.1",
 		"xo": "^0.54.1"
